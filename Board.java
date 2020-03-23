@@ -3,6 +3,11 @@ public class Board {
     Square[][] board = new Square[8][8];
 
     public Board() {
+        for (int i =0; i < 8; i++) {
+            for (int j = 0; i < 8; j++) {
+                board[i][j] = new Square();
+            }
+        }
         int numOfOccupiedSquares = (int)(Math.random() * 4) + 3;
         int startXPos = (int) Math.random() * 8,startYPos = (int) Math.random() * 8;
         board[startXPos][startYPos].changeSquareStatus();
