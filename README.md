@@ -6,6 +6,7 @@ The Board class constructs a matrix of object square and places random connected
 
 I will fill the graph class in when I know what I want to do with it.
 
+26-03-2020
 Okay so the idea I have for this project is to use the Board class to generate the 8x8 grid, each square will be it's own instance of Square 
 class.
 
