@@ -23,37 +23,8 @@ public class fx extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        letterChoice();
         printGrid(primaryStage);
 
-    }
-
-    void letterChoice() {
-        int xVal = (int) (Math.random() * 7 + 1);
-        int yVal = (int) (Math.random() * 7 + 1);
-
-        int[] startPoint = {xVal, yVal};
-        for (int i = 0; i < startPoint.length; i++) {
-            System.out.println(Arrays.toString(startPoint));
-        }
-
-        String letter = " ";
-        // T
-        if(xVal - 1 >= 0 && xVal + 1 <= 7 && yVal + 2 <= 7){
-            letter += "T, ";
-        }
-
-        // L
-        if(yVal + 2 >= 0 && xVal + 2 <=7){
-            letter += "L, ";
-        }
-
-        // I
-        // I is always true, can be done at any point
-        if(yVal + 2 <= 7 || yVal - 2 >= 0){
-            letter += "I";
-        }
-        System.out.println(letter);
     }
 
     public static SubScene fillSquare() {
