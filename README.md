@@ -1,5 +1,9 @@
 # CS4006Project
-
+31-03-2020
+To do list:
+    - Add numbers 1-8 (rows) and letter A-H (cols) to grid
+    - Add user input for start + goal positions AFTER Grid is displayed, then redisplay grid
+    - User input needs to be validated (rows within 1-8, cols with A-H)
 
 26-03-2020
 Okay so the idea I have for this project is to use the Board class to generate the 8x8 grid, each square will be it's own instance of Square 
