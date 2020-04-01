@@ -2,14 +2,20 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 import java.util.Arrays;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class fx extends Application {
 
@@ -38,7 +44,18 @@ public class fx extends Application {
         return scene;
     }
 
+    /*
+    Point dialogBox() {
+       JOptionPane popUpJOptionPane = new JOptionPane();
+       //JOptionPane.
+    }
+    */
+
     void printGrid(Stage primaryStage){
+        BorderPane border = new BorderPane();
+        Label numList = new Label("1 2 3 4 5 6 7 8");
+        border.setTop(numList);
+
         GridPane grid = new GridPane();
         grid.setGridLinesVisible(true);
 
@@ -61,9 +78,9 @@ public class fx extends Application {
                 }
             }
         }
-
+        border.setLeft(grid);
         grid.setStyle("-fx-background-color: WHITE; -fx-grid-lines-visible: true");
-        Scene scene = new Scene(grid, (colSize * 75),(rowSize * 75), Color.WHITE);
+        Scene scene = new Scene(border, (colSize * 75),(rowSize * 75), Color.WHITE);
         primaryStage.setTitle("Grid");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -225,7 +242,11 @@ class Board {
                 break;
             case 2:
                 //T shape
-
+                if (orientation == 0) {
+                    
+                } else {
+                    
+                }
                 break;
         }
         /*int XPos, YPos;
