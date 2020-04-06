@@ -1,7 +1,7 @@
 # CS4006Project
 31-03-2020
 To do list:
-    - Add numbers 1-8 (rows) and letter A-H (cols) to grid
+    - Add numbers 1-8 (rows) and letter A-H (cols) to grid (done)
     - Add user input for start + goal positions AFTER Grid is displayed, then redisplay grid
     - User input needs to be validated (rows within 1-8, cols with A-H)
 
