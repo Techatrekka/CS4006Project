@@ -13,6 +13,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+
 public class fx extends Application {
 
     static Square[][] board;
