@@ -1,4 +1,10 @@
 # CS4006Project
+06-04-2020
+To do list:
+    - A* algorithm
+    - Write 2-3 page report on project (email for clarification)
+
+
 31-03-2020
 To do list:
     - Add numbers 1-8 (rows) and letter A-H (cols) to grid (done)
