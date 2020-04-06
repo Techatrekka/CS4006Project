@@ -1,28 +1,18 @@
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 public class fx extends Application {
 
     static Square[][] board;
