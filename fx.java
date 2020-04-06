@@ -1,23 +1,27 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
 public class fx extends Application {
 
     static Square[][] board;
+    static ArrayList<String> letter = new ArrayList<>();
 
     public static void main(String[] args) {
         Board Board = new Board();
@@ -28,40 +32,100 @@ public class fx extends Application {
     @Override
     public void start(Stage primaryStage) {
         printGrid(primaryStage);
+        fx.dialogBox();
 
     }
 
     public static SubScene fillSquare() {
-        Circle circle = new Circle(20, 20f, 7);
-        circle.setFill(Color.RED);
+        Rectangle rec = new Rectangle(200, 200);
+        rec.setFill(Color.RED);
 
         Group group1 = new Group();
-        group1.getChildren().add(circle);
-        SubScene scene = new SubScene(group1, 40, 40);
+        group1.getChildren().add(rec);
+        SubScene scene = new SubScene(group1, 75, 75);
         scene.setFill(Color.WHITE);
         return scene;
     }
 
     /*
-    Point dialogBox() {
-       JOptionPane popUpJOptionPane = new JOptionPane();
-       //JOptionPane.
-    }
-    */
+     * public void refresh(){ primaryStage.refresh(); }
+     */
+
+    static void dialogBox() {
+
+        List<String> choices2 = new ArrayList<>();
+        choices2.add("1");
+        choices2.add("2");
+        choices2.add("3");
+        choices2.add("4");
+        choices2.add("5");
+        choices2.add("6");
+        choices2.add("7");
+        choices2.add("8");
+ 
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
+        dialog.setTitle("Choose Coordinates");
+        dialog.setContentText("Choose row number for start position: ");
+
+        Optional<String> results = dialog.showAndWait();
+            if (results.isPresent()){
+              letter.add(results.get());
+            }
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(number -> System.out.println("Your choice: " + number));
+ 
+        List<String> choices = new ArrayList<>();
+        choices.add("A");
+        choices.add("B");
+        choices.add("C");
+        choices.add("D");
+        choices.add("E");
+        choices.add("F");
+        choices.add("G");
+        choices.add("H");
+ 
+        ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
+        dialog2.setTitle("Choose Coordinates");
+        dialog2.setContentText("Choose column letter for start position: ");
+
+        Optional<String> result1 = dialog.showAndWait();
+        if (result1.isPresent()){
+              letter.add(result1.get());
+        }
+        
+        Optional<String> result2 = dialog2.showAndWait();
+        result2.ifPresent(letter -> System.out.println("Your choice: " + letter));
+ 
+        ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
+        dialog3.setContentText("Choose row number for end position: ");
+ 
+        Optional<String> result3 = dialog3.showAndWait();
+        result3.ifPresent(number2 -> System.out.println("Your choice: " + number2));
+ 
+        ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
+        dialog4.setContentText("Choose column letter for end position: ");
+ 
+        Optional<String> result4 = dialog4.showAndWait();
+        result4.ifPresent(letter2 -> System.out.println("Your choice: " + letter2));
+
+        for(int i = 0; i < letter.size(); i++){
+            System.out.println(letter.get(i));
+        }
+ }
 
     void printGrid(Stage primaryStage){
 
-        Text numbers = new Text("\n    1\n    2\n    3\n    4\n    5\n    6\n    7\n    8\n");
+        Text numbers = new Text("1\n2\n3\n4\n5\n6\n7\n8");
         numbers.setFont(Font.font("Tahoma", FontWeight.NORMAL, 63));
 
-        Text letters = new Text("  A  B  C  D  E  F  G  H");
+        Text letters = new Text(" A  B  C  D  E  F  G  H");
         letters.setFont(Font.font("Tahoma", FontWeight.NORMAL, 63));
 
         GridPane grid = new GridPane();
         grid.setGridLinesVisible(true);
-        grid.setAlignment(Pos.CENTER_RIGHT);
+        grid.setAlignment(Pos.CENTER);
         
-
         int rowSize = 8;
         int colSize = 8;
         for(int row = 0; row < rowSize; row++){
@@ -81,10 +145,10 @@ public class fx extends Application {
                 }
             }
         }
-        
+
         StackPane stack = new StackPane();
         stack.getChildren().addAll(grid,numbers,letters);
-        StackPane.setAlignment(letters, Pos.TOP_RIGHT);
+        StackPane.setAlignment(letters, Pos.TOP_CENTER);
         StackPane.setAlignment(numbers, Pos.CENTER_LEFT);
 
         grid.setStyle("-fx-background-color: WHITE; -fx-grid-lines-visible: true");
@@ -103,7 +167,6 @@ public class fx extends Application {
 class Point {
     int x,y;
     Point() { 
-
     }
 
     Point(int x, int y) {
@@ -166,7 +229,7 @@ class Board {
 
     Square[][] board;
 
-    public Board() {
+  public Board() {
         board = new Square[8][8];
         for (int i =0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -253,10 +316,24 @@ class Board {
                 break;
             case 2:
                 //T shape
+                if(startXPos > 5 && startYPos > 5) {
+                        startXPos = (int) (Math.random() * 6);
+                        startYPos = (int) (Math.random() * 6);
+                    }
                 if (orientation == 0) {
-
+                    for(int i = 1; i < 3; i++) {
+                        board[startXPos + i][startYPos].changeSquareStatus();
+                    }
+                    for(int i = 1; i < 3; i++) {
+                        board[startXPos + 1][startYPos + i].changeSquareStatus();
+                    }
                 } else {
-
+                    for(int i = 1; i < 3; i++) {
+                        board[startXPos][startYPos + i].changeSquareStatus();
+                    }
+                    for(int i = 1; i < 3; i++) {
+                        board[startXPos + i][startYPos + 1].changeSquareStatus();
+                    }
                 }
                 break;
         }
@@ -290,13 +367,4 @@ class Board {
     public Square[][] getBoard() {
         return board;
     }
-
-    void displayBoard() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(board[i][j].getOccupied());
-            }
-            System.out.println();
-        }
-    }
-}
+} 
