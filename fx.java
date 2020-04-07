@@ -21,7 +21,8 @@ import javafx.stage.Stage;
 public class fx extends Application {
 
     static Square[][] board;
-    static ArrayList<String> letter = new ArrayList<>();
+    static ArrayList<Integer> letter = new ArrayList<>();
+    static GridPane grid = new GridPane();
 
     public static void main(String[] args) {
         Board Board = new Board();
@@ -33,7 +34,6 @@ public class fx extends Application {
     public void start(Stage primaryStage) {
         printGrid(primaryStage);
         fx.dialogBox();
-
     }
 
     public static SubScene fillSquare() {
@@ -65,15 +65,16 @@ public class fx extends Application {
  
         ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
         dialog.setTitle("Choose Coordinates");
+        dialog.setHeaderText("");
         dialog.setContentText("Choose row number for start position: ");
 
         Optional<String> results = dialog.showAndWait();
             if (results.isPresent()){
-              letter.add(results.get());
+              letter.add(Integer.parseInt(results.get()));
             }
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(number -> System.out.println("Your choice: " + number));
+     //   Optional<String> result = dialog.showAndWait();
+      //  result.ifPresent(number -> System.out.println("Your choice: " + number));
  
         List<String> choices = new ArrayList<>();
         choices.add("A");
@@ -87,31 +88,38 @@ public class fx extends Application {
  
         ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
         dialog2.setTitle("Choose Coordinates");
+        dialog2.setHeaderText("");
         dialog2.setContentText("Choose column letter for start position: ");
 
-        Optional<String> result1 = dialog.showAndWait();
-        if (result1.isPresent()){
-              letter.add(result1.get());
+        Optional<String> result2 = dialog2.showAndWait();
+        if (result2.isPresent()){
+              String letter1 = result2.get();
+              System.out.println(letter1);
+              int l = letter1.charAt(0) - 64;
+              letter.add(l);
+              System.out.println(l);
         }
         
-        Optional<String> result2 = dialog2.showAndWait();
-        result2.ifPresent(letter -> System.out.println("Your choice: " + letter));
+     //   result2.ifPresent(letter -> System.out.println("Your choice: " + letter));
  
         ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
         dialog3.setContentText("Choose row number for end position: ");
- 
+        dialog3.setHeaderText("");
         Optional<String> result3 = dialog3.showAndWait();
-        result3.ifPresent(number2 -> System.out.println("Your choice: " + number2));
+      //  result3.ifPresent(number2 -> System.out.println("Your choice: " + number2));
  
         ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
         dialog4.setContentText("Choose column letter for end position: ");
- 
+        dialog4.setHeaderText("");
         Optional<String> result4 = dialog4.showAndWait();
-        result4.ifPresent(letter2 -> System.out.println("Your choice: " + letter2));
+      //  result4.ifPresent(letter2 -> System.out.println("Your choice: " + letter2));
 
         for(int i = 0; i < letter.size(); i++){
             System.out.println(letter.get(i));
         }
+        int x1 = letter.get(0);
+        int y1 = letter.get(1);
+        grid.add(fillSquare(), x1, y1);
  }
 
     void printGrid(Stage primaryStage){
@@ -122,7 +130,6 @@ public class fx extends Application {
         Text letters = new Text(" A  B  C  D  E  F  G  H");
         letters.setFont(Font.font("Tahoma", FontWeight.NORMAL, 63));
 
-        GridPane grid = new GridPane();
         grid.setGridLinesVisible(true);
         grid.setAlignment(Pos.CENTER);
         
