@@ -1,3 +1,14 @@
+/**
+ * 
+ * CS4006 Intelegent Systems - Project
+ * 
+ * @author: Michele Cavaliere - 18219365
+ * @author: Nicole Berty - 18246702
+ * @author: Sean Lynch - 18245137
+ * @author: Matt Lucy - 18247083
+ * 
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +26,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -37,6 +47,11 @@ public class fx extends Application {
         fx.dialogBox();
     }
 
+    /**
+     * Method to fill squares on the grid.
+     * @return
+     */
+
     public static SubScene fillSquare() {
         Rectangle rec = new Rectangle(200, 200);
         rec.setFill(Color.RED);
@@ -48,14 +63,18 @@ public class fx extends Application {
         return scene;
     }
 
+    /**
+     * Pops up four dialog box's to the screen to enter the co-ordinates
+     * of the start and goal position.
+     */
+
     static void dialogBox() {
 
         List<String> choices2 = new ArrayList<> ();
 
-        for(int i = 1; i <=8; i++){
+        for(int i = 1; i <= 8; i++){
             choices2.add(String.valueOf(i));
         }
-
 
         ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
         dialog.setTitle("Choose Coordinates");
@@ -66,11 +85,9 @@ public class fx extends Application {
             if (results.isPresent()){
               letter.add(Integer.parseInt(results.get()) - 1);
             }
-
-     //   Optional<String> result = dialog.showAndWait();
-      //  result.ifPresent(number -> System.out.println("Your choice: " + number));
  
         List<String> choices = new ArrayList<>();
+
         choices.add("A");
         choices.add("B");
         choices.add("C");
@@ -91,8 +108,6 @@ public class fx extends Application {
               int l = ((letter1.charAt(0) - 64) - 1);
               letter.add(l);
         }
-        
-     //   result2.ifPresent(letter -> System.out.println("Your choice: " + letter));
  
         ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
         dialog3.setContentText("Choose row number for end position: ");
@@ -101,8 +116,6 @@ public class fx extends Application {
         if (result3.isPresent()){
             letter.add(Integer.parseInt(result3.get()) - 1);
         }
-      
-      //  result3.ifPresent(number2 -> System.out.println("Your choice: " + number2));
  
         ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
         dialog4.setContentText("Choose column letter for end position: ");
@@ -114,22 +127,24 @@ public class fx extends Application {
             letter.add(l);
         }
 
-      //  result4.ifPresent(letter2 -> System.out.println("Your choice: " + letter2));
+        Text startPos = new Text("Start");
+        startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+        startPos.setFill(Color.BLUE);
 
-      Text startPos = new Text("Start");
-      startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-      startPos.setFill(Color.BLUE);
-      startPos.setTextAlignment(TextAlignment.CENTER);
+        Text goalPos = new Text("Goal");
+        goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+        goalPos.setFill(Color.ORANGE);
 
-      Text goalPos = new Text("Goal");
-      goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-      goalPos.setFill(Color.ORANGE);
-      goalPos.setTextAlignment(TextAlignment.CENTER);
-
-      grid.add(startPos, letter.get(1) ,letter.get(0));
-      grid.add(goalPos, letter.get(3), letter.get(2));
+        grid.add(startPos, letter.get(1) ,letter.get(0));
+        grid.add(goalPos, letter.get(3), letter.get(2));
 
     }
+
+    /**
+     * Prints out the grid on the sceen.
+     * Adds both numbers and letters to the side and top of the grid.
+     * @param primaryStage
+     */
 
     void printGrid(Stage primaryStage){
 
@@ -138,9 +153,6 @@ public class fx extends Application {
 
         Text letters = new Text(" A  B  C  D  E  F  G  H");
         letters.setFont(Font.font("Tahoma", FontWeight.NORMAL, 63));
-
-        grid.setGridLinesVisible(true);
-        grid.setAlignment(Pos.CENTER);
         
         int rowSize = 8;
         int colSize = 8;
@@ -154,8 +166,8 @@ public class fx extends Application {
             grid.getColumnConstraints().add(column);
         }
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < rowSize; i++) {
+            for (int j = 0; j < colSize; j++) {
                 if (board[i][j].getOccupied()) {
                     grid.add(fillSquare(), i, j);
                 }
@@ -167,6 +179,7 @@ public class fx extends Application {
         StackPane.setAlignment(letters, Pos.TOP_CENTER);
         StackPane.setAlignment(numbers, Pos.CENTER_LEFT);
 
+        grid.setAlignment(Pos.CENTER);
         grid.setStyle("-fx-background-color: WHITE; -fx-grid-lines-visible: true");
         Scene scene = new Scene(stack, (colSize * 89),(rowSize * 92), Color.WHITE);
         primaryStage.setTitle("Grid");
