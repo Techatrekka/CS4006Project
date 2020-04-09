@@ -87,7 +87,7 @@ public class fx extends Application {
             }
  
         List<String> choices = new ArrayList<>();
-        
+
         for(int i = 1; i <= 8; i++){
             char c = (char)(i + 64);
             choices.add(String.valueOf(c));
@@ -100,9 +100,7 @@ public class fx extends Application {
 
         Optional<String> result2 = dialog2.showAndWait();
         if (result2.isPresent()){
-              String letter1 = result2.get();
-              int l = ((letter1.charAt(0) - 64) - 1);
-              letter.add(l);
+            letter.add((result2.get().charAt(0) - 64) - 1);
         }
  
         ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
@@ -118,9 +116,7 @@ public class fx extends Application {
         dialog4.setHeaderText("");
         Optional<String> result4 = dialog4.showAndWait();
         if (result4.isPresent()){
-            String letter1 = result4.get();
-            int l = ((letter1.charAt(0) - 64) - 1);
-            letter.add(l);
+            letter.add((result4.get().charAt(0) - 64) - 1);
         }
 
         Text startPos = new Text("Start");
