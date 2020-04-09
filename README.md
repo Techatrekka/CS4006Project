@@ -1,14 +1,17 @@
 # CS4006Project
+09-04-2020
+    - After algorithm implemented, draw best path using circles to fill in (to differentiate from filled in squares)
+
 06-04-2020
 To do list:
     - A* algorithm
-    - Write 2-3 page report on project (email for clarification)
+    - Write 2-3 page report on project
 
 
 31-03-2020
 To do list:
     - Add numbers 1-8 (rows) and letter A-H (cols) to grid (done)
-    - Add user input for start + goal positions AFTER Grid is displayed (done), then redisplay grid with start and goal positions now labeled
+    - Add user input for start + goal positions AFTER Grid is displayed (done), then redisplay grid with start and goal positions now labeled (done)
     - User input needs to be validated (rows within 1-8, cols with A-H) (done)
 
 26-03-2020
