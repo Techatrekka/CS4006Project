@@ -87,15 +87,11 @@ public class fx extends Application {
             }
  
         List<String> choices = new ArrayList<>();
-
-        choices.add("A");
-        choices.add("B");
-        choices.add("C");
-        choices.add("D");
-        choices.add("E");
-        choices.add("F");
-        choices.add("G");
-        choices.add("H");
+        
+        for(int i = 1; i <= 8; i++){
+            char c = (char)(i + 64);
+            choices.add(String.valueOf(c));
+        }
  
         ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
         dialog2.setTitle("Choose Coordinates");
