@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -47,21 +48,13 @@ public class fx extends Application {
         return scene;
     }
 
-    /*
-     * public void refresh(){ primaryStage.refresh(); }
-     */
-
     static void dialogBox() {
 
         List<String> choices2 = new ArrayList<>();
-        choices2.add("1");
-        choices2.add("2");
-        choices2.add("3");
-        choices2.add("4");
-        choices2.add("5");
-        choices2.add("6");
-        choices2.add("7");
-        choices2.add("8");
+        
+        for(int i = 1; i <= 8; i++){
+            choices2.add(String.valueOf(i));
+        }
  
         ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
         dialog.setTitle("Choose Coordinates");
@@ -70,7 +63,7 @@ public class fx extends Application {
 
         Optional<String> results = dialog.showAndWait();
             if (results.isPresent()){
-              letter.add(Integer.parseInt(results.get()));
+              letter.add(Integer.parseInt(results.get()) - 1);
             }
 
      //   Optional<String> result = dialog.showAndWait();
@@ -95,7 +88,7 @@ public class fx extends Application {
         if (result2.isPresent()){
               String letter1 = result2.get();
               System.out.println(letter1);
-              int l = letter1.charAt(0) - 64;
+              int l = (letter1.charAt(0) - 64) - 1;
               letter.add(l);
               System.out.println(l);
         }
@@ -106,21 +99,40 @@ public class fx extends Application {
         dialog3.setContentText("Choose row number for end position: ");
         dialog3.setHeaderText("");
         Optional<String> result3 = dialog3.showAndWait();
+        if (result3.isPresent()){
+            letter.add(Integer.parseInt(result3.get()) - 1);
+        }
+      
       //  result3.ifPresent(number2 -> System.out.println("Your choice: " + number2));
  
         ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
         dialog4.setContentText("Choose column letter for end position: ");
         dialog4.setHeaderText("");
         Optional<String> result4 = dialog4.showAndWait();
+        if (result4.isPresent()){
+            String letter1 = result4.get();
+            System.out.println(letter1);
+            int l = (letter1.charAt(0) - 64) - 1;
+            letter.add(l);
+            System.out.println(l);
+        }
+
       //  result4.ifPresent(letter2 -> System.out.println("Your choice: " + letter2));
 
-        for(int i = 0; i < letter.size(); i++){
-            System.out.println(letter.get(i));
-        }
-        int x1 = letter.get(0);
-        int y1 = letter.get(1);
-        grid.add(fillSquare(), x1, y1);
- }
+      Text startPos = new Text("Start");
+      startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+      startPos.setFill(Color.BLUE);
+      startPos.setTextAlignment(TextAlignment.CENTER);
+
+      Text goalPos = new Text("Goal");
+      goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+      goalPos.setFill(Color.ORANGE);
+      goalPos.setTextAlignment(TextAlignment.CENTER);
+
+      grid.add(startPos, letter.get(0), letter.get(1));
+      grid.add(goalPos, letter.get(2), letter.get(3));
+
+    }
 
     void printGrid(Stage primaryStage){
 
