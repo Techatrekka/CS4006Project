@@ -50,12 +50,17 @@ public class fx extends Application {
 
     static void dialogBox() {
 
-        List<String> choices2 = new ArrayList<>();
-        
-        for(int i = 1; i <= 8; i++){
-            choices2.add(String.valueOf(i));
-        }
- 
+        List<String> choices2 = new ArrayList<> ();
+            choices2.add("1");
+            choices2.add("2");
+            choices2.add("3");
+            choices2.add("4");
+            choices2.add("5");
+            choices2.add("6");
+            choices2.add("7");
+            choices2.add("8");
+
+
         ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
         dialog.setTitle("Choose Coordinates");
         dialog.setHeaderText("");
@@ -64,6 +69,7 @@ public class fx extends Application {
         Optional<String> results = dialog.showAndWait();
             if (results.isPresent()){
               letter.add(Integer.parseInt(results.get()) - 1);
+              System.out.println(results.get());
             }
 
      //   Optional<String> result = dialog.showAndWait();
@@ -88,7 +94,7 @@ public class fx extends Application {
         if (result2.isPresent()){
               String letter1 = result2.get();
               System.out.println(letter1);
-              int l = (letter1.charAt(0) - 64) - 1;
+              int l = ((letter1.charAt(0) - 64) - 1);
               letter.add(l);
               System.out.println(l);
         }
@@ -101,6 +107,7 @@ public class fx extends Application {
         Optional<String> result3 = dialog3.showAndWait();
         if (result3.isPresent()){
             letter.add(Integer.parseInt(result3.get()) - 1);
+            System.out.println(result3.get());
         }
       
       //  result3.ifPresent(number2 -> System.out.println("Your choice: " + number2));
@@ -112,7 +119,7 @@ public class fx extends Application {
         if (result4.isPresent()){
             String letter1 = result4.get();
             System.out.println(letter1);
-            int l = (letter1.charAt(0) - 64) - 1;
+            int l = ((letter1.charAt(0) - 64) - 1);
             letter.add(l);
             System.out.println(l);
         }
@@ -129,8 +136,8 @@ public class fx extends Application {
       goalPos.setFill(Color.ORANGE);
       goalPos.setTextAlignment(TextAlignment.CENTER);
 
-      grid.add(startPos, letter.get(0), letter.get(1));
-      grid.add(goalPos, letter.get(2), letter.get(3));
+      grid.add(startPos, letter.get(1) ,letter.get(0));
+      grid.add(goalPos, letter.get(3), letter.get(2));
 
     }
 
