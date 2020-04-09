@@ -51,14 +51,10 @@ public class fx extends Application {
     static void dialogBox() {
 
         List<String> choices2 = new ArrayList<> ();
-            choices2.add("1");
-            choices2.add("2");
-            choices2.add("3");
-            choices2.add("4");
-            choices2.add("5");
-            choices2.add("6");
-            choices2.add("7");
-            choices2.add("8");
+
+        for(int i = 1; i <=8; i++){
+            choices2.add(String.valueOf(i));
+        }
 
 
         ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
@@ -69,7 +65,6 @@ public class fx extends Application {
         Optional<String> results = dialog.showAndWait();
             if (results.isPresent()){
               letter.add(Integer.parseInt(results.get()) - 1);
-              System.out.println(results.get());
             }
 
      //   Optional<String> result = dialog.showAndWait();
@@ -93,10 +88,8 @@ public class fx extends Application {
         Optional<String> result2 = dialog2.showAndWait();
         if (result2.isPresent()){
               String letter1 = result2.get();
-              System.out.println(letter1);
               int l = ((letter1.charAt(0) - 64) - 1);
               letter.add(l);
-              System.out.println(l);
         }
         
      //   result2.ifPresent(letter -> System.out.println("Your choice: " + letter));
@@ -107,7 +100,6 @@ public class fx extends Application {
         Optional<String> result3 = dialog3.showAndWait();
         if (result3.isPresent()){
             letter.add(Integer.parseInt(result3.get()) - 1);
-            System.out.println(result3.get());
         }
       
       //  result3.ifPresent(number2 -> System.out.println("Your choice: " + number2));
@@ -118,10 +110,8 @@ public class fx extends Application {
         Optional<String> result4 = dialog4.showAndWait();
         if (result4.isPresent()){
             String letter1 = result4.get();
-            System.out.println(letter1);
             int l = ((letter1.charAt(0) - 64) - 1);
             letter.add(l);
-            System.out.println(l);
         }
 
       //  result4.ifPresent(letter2 -> System.out.println("Your choice: " + letter2));
