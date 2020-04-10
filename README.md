@@ -1,11 +1,14 @@
 # CS4006Project
+10-04-2020
+    - Add check for obstacle being generated right on the edge and preventing path from being generated (eg T generated in bottom left corner)
+
 09-04-2020
     - After algorithm implemented, draw best path using circles to fill in (to differentiate from filled in squares)
 
 06-04-2020
 To do list:
     - A* algorithm
-    - Write 2-3 page report on project
+    - Write 2-3 page report on project (google doc)
 
 
 31-03-2020
