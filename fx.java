@@ -1,6 +1,6 @@
 /**
  * 
- * CS4006 Intelegent Systems - Project
+ * CS4006 Intelligent Systems - Project
  * 
  * @author: Michele Cavaliere - 18219365
  * @author: Nicole Berty - 18246702
