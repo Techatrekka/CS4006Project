@@ -1,11 +1,11 @@
 /**
  * 
- * CS4006 Intelligent Systems - Project
+ * CS4006 Intelegent Systems - Project.
  * 
  * @author: Michele Cavaliere - 18219365
  * @author: Nicole Berty - 18246702
  * @author: Sean Lynch - 18245137
- * @author: Matt Lucy - 18247083
+ * @author: Matt Lucey - 18247083
  * 
  */
 
@@ -23,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -49,7 +50,8 @@ public class fx extends Application {
 
     /**
      * Method to fill squares on the grid.
-     * @return
+     * 
+     * @SubScene
      */
 
     public static SubScene fillSquare() {
@@ -58,7 +60,24 @@ public class fx extends Application {
 
         Group group1 = new Group();
         group1.getChildren().add(rec);
-        SubScene scene = new SubScene(group1, 75, 75);
+        SubScene scene = new SubScene(group1, 75, 75); 
+        scene.setFill(Color.WHITE);
+        return scene;
+    }
+
+    /**
+     * Method to draw the path of the A* Algorithm.
+     * 
+     * @return
+     */
+
+    public static SubScene path() {
+        Circle cir = new Circle(25,25f,20);
+        cir.setFill(Color.GREEN);
+
+        Group group1 = new Group();
+        group1.getChildren().add(cir);
+        SubScene scene = new SubScene(group1, 45, 45); 
         scene.setFill(Color.WHITE);
         return scene;
     }
@@ -129,7 +148,6 @@ public class fx extends Application {
 
         grid.add(startPos, letter.get(1) ,letter.get(0));
         grid.add(goalPos, letter.get(3), letter.get(2));
-
     }
 
     /**
@@ -358,6 +376,7 @@ class Board {
                 }
                 break;
         }
+
         /*int XPos, YPos;
         for (int i = 1; i < numOfOccupiedSquares; i++) {
             do {
