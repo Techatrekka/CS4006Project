@@ -1,12 +1,12 @@
 /**
- * 
- * CS4006 Intelegent Systems - Project.
- * 
+ *
+ * CS4006 Intelligent Systems - Project.
+ *
  * @author: Michele Cavaliere - 18219365
  * @author: Nicole Berty - 18246702
  * @author: Sean Lynch - 18245137
  * @author: Matt Lucey - 18247083
- * 
+ *
  */
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class fx extends Application {
 
     /**
      * Method to fill squares on the grid.
-     * 
+     *
      * @SubScene
      */
 
@@ -60,14 +60,14 @@ public class fx extends Application {
 
         Group group1 = new Group();
         group1.getChildren().add(rec);
-        SubScene scene = new SubScene(group1, 75, 75); 
+        SubScene scene = new SubScene(group1, 75, 75);
         scene.setFill(Color.WHITE);
         return scene;
     }
 
     /**
      * Method to draw the path of the A* Algorithm.
-     * 
+     *
      * @return
      */
 
@@ -77,7 +77,7 @@ public class fx extends Application {
 
         Group group1 = new Group();
         group1.getChildren().add(cir);
-        SubScene scene = new SubScene(group1, 45, 45); 
+        SubScene scene = new SubScene(group1, 45, 45);
         scene.setFill(Color.WHITE);
         return scene;
     }
@@ -101,17 +101,17 @@ public class fx extends Application {
         dialog.setContentText("Choose row number for start position: ");
 
         Optional<String> results = dialog.showAndWait();
-            if (results.isPresent()){
-              letter.add(Integer.parseInt(results.get()) - 1);
-            }
- 
+        if (results.isPresent()){
+            letter.add(Integer.parseInt(results.get()) - 1);
+        }
+
         List<String> choices = new ArrayList<>();
 
         for(int i = 1; i <= 8; i++){
             char c = (char)(i + 64);
             choices.add(String.valueOf(c));
         }
- 
+
         ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
         dialog2.setTitle("Choose Coordinates");
         dialog2.setHeaderText("");
@@ -121,7 +121,7 @@ public class fx extends Application {
         if (result2.isPresent()){
             letter.add((result2.get().charAt(0) - 64) - 1);
         }
- 
+
         ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
         dialog3.setContentText("Choose row number for end position: ");
         dialog3.setHeaderText("");
@@ -129,7 +129,7 @@ public class fx extends Application {
         if (result3.isPresent()){
             letter.add(Integer.parseInt(result3.get()) - 1);
         }
- 
+
         ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
         dialog4.setContentText("Choose column letter for end position: ");
         dialog4.setHeaderText("");
@@ -163,7 +163,7 @@ public class fx extends Application {
 
         Text letters = new Text(" A  B  C  D  E  F  G  H");
         letters.setFont(Font.font("Tahoma", FontWeight.NORMAL, 63));
-        
+
         int rowSize = 8;
         int colSize = 8;
         for(int row = 0; row < rowSize; row++){
@@ -205,7 +205,7 @@ public class fx extends Application {
 
 class Point {
     int x,y;
-    Point() { 
+    Point() {
     }
 
     Point(int x, int y) {
@@ -268,7 +268,7 @@ class Board {
 
     Square[][] board;
 
-  public Board() {
+    public Board() {
         board = new Square[8][8];
         for (int i =0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -276,8 +276,8 @@ class Board {
             }
         }
         int obstacle = (int)(Math.random() * 3);
-        int startXPos = (int) (Math.random() * 8);
-        int startYPos = (int) (Math.random() * 8);
+        int startXPos = (int) (Math.random() * 6);
+        int startYPos = (int) (Math.random() * 6);
         board[startXPos][startYPos].changeSquareStatus();
         int orientation = (int) (Math.random() * 2);
         System.out.print(orientation);
@@ -356,9 +356,9 @@ class Board {
             case 2:
                 //T shape
                 if(startXPos > 5 && startYPos > 5) {
-                        startXPos = (int) (Math.random() * 6);
-                        startYPos = (int) (Math.random() * 6);
-                    }
+                    startXPos = (int) (Math.random() * 4 + 1);
+                    startYPos = (int) (Math.random() * 4 + 1);
+                }
                 if (orientation == 0) {
                     for(int i = 1; i < 3; i++) {
                         board[startXPos + i][startYPos].changeSquareStatus();
@@ -407,4 +407,4 @@ class Board {
     public Square[][] getBoard() {
         return board;
     }
-} 
+}
