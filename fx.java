@@ -35,6 +35,7 @@ public class fx extends Application {
     static Square[][] board;
     static ArrayList<Integer> letter = new ArrayList<>();
     static GridPane grid = new GridPane();
+    static ArrayList<Node> path = new ArrayList<>();
 
     public static void main(String[] args) {
         Board Board = new Board();
@@ -46,6 +47,8 @@ public class fx extends Application {
     public void start(Stage primaryStage) {
         printGrid(primaryStage);
         fx.dialogBox();
+        Graph graph = new Graph(board,letter.get(0),letter.get(1),letter.get(2),letter.get(3));
+        path = graph.Astar();
     }
 
     /**
@@ -224,7 +227,6 @@ class Graph {
         this.Board = Board;
         start = new Node(startX, startY);
         end = new Node(endX, endY);
-        Astar();
     }
 
     ArrayList<Node> Astar() {
