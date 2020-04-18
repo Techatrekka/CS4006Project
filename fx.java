@@ -13,10 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -47,8 +50,8 @@ public class fx extends Application {
     public void start(Stage primaryStage) {
         printGrid(primaryStage);
         fx.dialogBox();
-        Graph graph = new Graph(board,letter.get(0),letter.get(1),letter.get(2),letter.get(3));
-        path = graph.Astar();
+      //  Graph graph = new Graph(board,letter.get(0),letter.get(1),letter.get(2),letter.get(3));
+      //  path = graph.Astar();
     }
 
     /**
@@ -70,11 +73,10 @@ public class fx extends Application {
 
     /**
      * Method to draw the path of the A* Algorithm.
-     *
      * @return
      */
 
-    public static SubScene path() {
+    public static SubScene pathDraw() {
         Circle cir = new Circle(25,25f,20);
         cir.setFill(Color.GREEN);
 
@@ -161,6 +163,24 @@ public class fx extends Application {
 
     void printGrid(Stage primaryStage){
 
+        Button button = new Button();
+        button.setText("Find Shortest Path");
+        button.setAlignment(Pos.BOTTOM_CENTER);
+        button.setPrefSize(100, 40);
+
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+            public void handle(ActionEvent e) 
+            { 
+                Graph graph = new Graph(board,letter.get(0),letter.get(1),letter.get(2),letter.get(3));
+                path = graph.Astar();
+                for(int i = 0; i < path.size(); i++){
+                    grid.add(pathDraw(), path.get(i).y, path.get(i).x);
+                }
+            } 
+        }; 
+
+        button.setOnAction(event);
+
         Text numbers = new Text("1\n2\n3\n4\n5\n6\n7\n8");
         numbers.setFont(Font.font("Tahoma", FontWeight.NORMAL, 63));
 
@@ -182,15 +202,16 @@ public class fx extends Application {
         for (int i = 0; i < rowSize; i++) {
             for (int j = 0; j < colSize; j++) {
                 if (board[i][j].getOccupied()) {
-                    grid.add(fillSquare(), i, j);
+                    grid.add(fillSquare(), j, i);
                 }
             }
         }
 
         StackPane stack = new StackPane();
-        stack.getChildren().addAll(grid,numbers,letters);
+        stack.getChildren().addAll(grid,numbers,letters,button);
         StackPane.setAlignment(letters, Pos.TOP_CENTER);
         StackPane.setAlignment(numbers, Pos.CENTER_LEFT);
+        StackPane.setAlignment(button, Pos.BOTTOM_CENTER);
 
         grid.setAlignment(Pos.CENTER);
         grid.setStyle("-fx-background-color: WHITE; -fx-grid-lines-visible: true");
@@ -249,28 +270,28 @@ class Graph {
                 break;
             } else {
                 ArrayList<Node> neighboursOfCurrent = new ArrayList<>();
-                if (!(current.x + 1 > 7)) {
+                if (!(current.x + 1 > 7) && !Board[current.x + 1][current.y].getOccupied()) {
                     Node rightNeighbour = new Node(current.x + 1,current.y);
                     rightNeighbour.hValue = ManhattanDistance(rightNeighbour);
                     rightNeighbour.gValue = g(rightNeighbour);
                     rightNeighbour.fValue = rightNeighbour.gValue + rightNeighbour.hValue;
                     neighboursOfCurrent.add(rightNeighbour);
                 }
-                if (!(current.x - 1 < 0)) {
+                if (!(current.x - 1 < 0) && !Board[current.x - 1][current.y].getOccupied()) {
                     Node leftNeighbour = new Node(current.x - 1,current.y);
                     leftNeighbour.hValue = ManhattanDistance(leftNeighbour);
                     leftNeighbour.gValue = g(leftNeighbour);
                     leftNeighbour.fValue = leftNeighbour.gValue + leftNeighbour.hValue;
                     neighboursOfCurrent.add(leftNeighbour);
                 }
-                if (!(current.y + 1 > 7)) {
+                if (!(current.y + 1 > 7) && !Board[current.x][current.y + 1].getOccupied()) {
                     Node upNeighbour = new Node(current.x,current.y + 1);
                     upNeighbour.hValue = ManhattanDistance(upNeighbour);
                     upNeighbour.gValue = g(upNeighbour);
                     upNeighbour.fValue = upNeighbour.gValue + upNeighbour.hValue;
                     neighboursOfCurrent.add(upNeighbour);
                 }
-                if (!(current.y - 1 < 0)) {
+                if (!(current.y - 1 < 0) && !Board[current.x][current.y-1].getOccupied()) {
                     Node downNeighbour = new Node(current.x,current.y - 1);
                     downNeighbour.hValue = ManhattanDistance(downNeighbour);
                     downNeighbour.gValue = g(downNeighbour);
