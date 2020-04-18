@@ -227,7 +227,7 @@ class Graph {
         Astar();
     }
 
-    void Astar() {
+    ArrayList<Node> Astar() {
         ArrayList<Node> open = new ArrayList<>();
         ArrayList<Node> closed = new ArrayList<>();
         open.add(start);
@@ -288,6 +288,7 @@ class Graph {
                 }
             }
         }
+        return closed;
     }
 
     //h(n)
