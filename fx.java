@@ -2,9 +2,9 @@
  *
  * CS4006 Intelligent Systems - Project.
  *
+ * @author: Sean Lynch - 18245137
  * @author: Michele Cavaliere - 18219365
  * @author: Nicole Berty - 18246702
- * @author: Sean Lynch - 18245137
  * @author: Matt Lucey - 18247083
  *
  */
@@ -71,7 +71,7 @@ public class fx extends Application {
 
     /**
      * Method to draw the path of the A* Algorithm.
-     * 
+     *
      * @return
      */
 
@@ -167,17 +167,17 @@ public class fx extends Application {
         button.setAlignment(Pos.BOTTOM_CENTER);
         button.setPrefSize(100, 40);
 
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-            public void handle(ActionEvent e) 
-            { 
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
                 Graph graph = new Graph(board,coordinates.get(0),coordinates.get(1),coordinates.get(2),coordinates.get(3));
                 path = graph.Astar();
                 for(int i = 0; i < path.size(); i++){
                     grid.add(pathDraw(), path.get(i).y, path.get(i).x);
                 }
-            } 
-        }; 
-        
+            }
+        };
+
         button.setOnAction(event);
 
         Text numbers = new Text("1\n2\n3\n4\n5\n6\n7\n8");
@@ -259,42 +259,41 @@ class Graph {
             current.hValue = ManhattanDistance(current);
             current.gValue = g(current);
             current.fValue = current.hValue + current.gValue;
+            if (open.size() == 0) return null;
+            current = open.get(0);
             for (int i = 0; i < open.size(); i++) {
-                if (open.get(i).hValue < current.hValue) {
+                if (open.get(i).hValue <= current.hValue && !(closed.contains(open.get(i)))) {
                     current = open.get(i);
                 }
             }
+            open.remove(current);
             closed.add(current);
             if (current.hValue == 0) {
                 break;
             } else {
                 ArrayList<Node> neighboursOfCurrent = new ArrayList<>();
-                if (!(current.x + 1 > 7) && !board[current.x + 1][current.y].getOccupied()) {
+                if (!(current.x + 1 > 7) && !board[current.x + 1][current.y].getOccupied() &&
+                        NewNode(current.x + 1, current.y, open, closed)) {
                     Node rightNeighbour = new Node(current.x + 1,current.y);
-                    rightNeighbour.hValue = ManhattanDistance(rightNeighbour);
-                    rightNeighbour.gValue = g(rightNeighbour);
-                    rightNeighbour.fValue = rightNeighbour.gValue + rightNeighbour.hValue;
+                    rightNeighbour = values(rightNeighbour);
                     neighboursOfCurrent.add(rightNeighbour);
                 }
-                if (!(current.x - 1 < 0) && !board[current.x - 1][current.y].getOccupied()) {
+                if (!(current.x - 1 < 0) && !board[current.x - 1][current.y].getOccupied()
+                        &&NewNode(current.x - 1, current.y, open, closed)){
                     Node leftNeighbour = new Node(current.x - 1,current.y);
-                    leftNeighbour.hValue = ManhattanDistance(leftNeighbour);
-                    leftNeighbour.gValue = g(leftNeighbour);
-                    leftNeighbour.fValue = leftNeighbour.gValue + leftNeighbour.hValue;
+                    leftNeighbour = values(leftNeighbour);
                     neighboursOfCurrent.add(leftNeighbour);
                 }
-                if (!(current.y + 1 > 7) && !board[current.x][current.y + 1].getOccupied()) {
+                if (!(current.y + 1 > 7) && !board[current.x][current.y + 1].getOccupied()
+                        &&NewNode(current.x,current.y+1, open, closed)) {
                     Node upNeighbour = new Node(current.x,current.y + 1);
-                    upNeighbour.hValue = ManhattanDistance(upNeighbour);
-                    upNeighbour.gValue = g(upNeighbour);
-                    upNeighbour.fValue = upNeighbour.gValue + upNeighbour.hValue;
+                    upNeighbour = values(upNeighbour);
                     neighboursOfCurrent.add(upNeighbour);
                 }
-                if (!(current.y - 1 < 0) && !board[current.x][current.y-1].getOccupied()) {
+                if (!(current.y - 1 < 0) && !board[current.x][current.y-1].getOccupied()
+                        &&NewNode(current.x,current.y - 1, open, closed)) {
                     Node downNeighbour = new Node(current.x,current.y - 1);
-                    downNeighbour.hValue = ManhattanDistance(downNeighbour);
-                    downNeighbour.gValue = g(downNeighbour);
-                    downNeighbour.fValue = downNeighbour.gValue + downNeighbour.hValue;
+                    downNeighbour = values(downNeighbour);
                     neighboursOfCurrent.add(downNeighbour);
                 }
                 for (Node x: neighboursOfCurrent) {
@@ -311,6 +310,27 @@ class Graph {
             }
         }
         return closed;
+    }
+
+    boolean NewNode(int x, int y, ArrayList<Node> open, ArrayList<Node> closed) {
+        for (int i = 0; i < open.size(); i++) {
+            if (open.get(i).x == x && open.get(i).y == y) {
+                return false;
+            }
+        }
+        for (int i = 0; i < closed.size(); i++) {
+            if (closed.get(i).x == x && closed.get(i).y == y) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    Node values(Node node) {
+        node.gValue = g(node);
+        node.hValue = ManhattanDistance(node);
+        node.fValue = node.hValue + node.gValue;
+        return node;
     }
 
     //h(n)
