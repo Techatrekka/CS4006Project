@@ -203,12 +203,12 @@ public class fx extends Application {
     }
 }
 
-class Point {
+class Node {
     int x,y;
-    Point() {
-    }
+    double gValue = 100, hValue = 100, fValue = 100;
+    Node parent;
 
-    Point(int x, int y) {
+    Node(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -217,28 +217,95 @@ class Point {
 class Graph {
 
     Square[][] Board;
-    Point start;
-    Point end;
+    Node start;
+    Node end;
 
     Graph(Square[][] Board, int startX, int startY, int endX, int endY) {
         this.Board = Board;
-        start = new Point(startX, startY);
-        end = new Point(endX, endY);
+        start = new Node(startX, startY);
+        end = new Node(endX, endY);
+        Astar();
     }
 
-    int ManhattanDistance() {
-        int distance = 0;
+    void Astar() {
+        ArrayList<Node> open = new ArrayList<>();
+        ArrayList<Node> closed = new ArrayList<>();
+        open.add(start);
+        //g(n) is the total computed cost
+        Node current = open.get(0);
+        while(!(current == end)) {
+            current.hValue = ManhattanDistance(current);
+            current.gValue = g(current);
+            current.fValue = current.hValue + current.gValue;
+            for (int i = 0; i < open.size(); i++) {
+                if (open.get(i).hValue < current.hValue) {
+                    current = open.get(i);
+                }
+            }
+            closed.add(current);
+            if (current.hValue == 0) {
+                break;
+            } else {
+                ArrayList<Node> neighboursOfCurrent = new ArrayList<>();
+                if (!(current.x + 1 > 7)) {
+                    Node rightNeighbour = new Node(current.x + 1,current.y);
+                    rightNeighbour.hValue = ManhattanDistance(rightNeighbour);
+                    rightNeighbour.gValue = g(rightNeighbour);
+                    rightNeighbour.fValue = rightNeighbour.gValue + rightNeighbour.hValue;
+                    neighboursOfCurrent.add(rightNeighbour);
+                }
+                if (!(current.x - 1 < 0)) {
+                    Node leftNeighbour = new Node(current.x - 1,current.y);
+                    leftNeighbour.hValue = ManhattanDistance(leftNeighbour);
+                    leftNeighbour.gValue = g(leftNeighbour);
+                    leftNeighbour.fValue = leftNeighbour.gValue + leftNeighbour.hValue;
+                    neighboursOfCurrent.add(leftNeighbour);
+                }
+                if (!(current.y + 1 > 7)) {
+                    Node upNeighbour = new Node(current.x,current.y + 1);
+                    upNeighbour.hValue = ManhattanDistance(upNeighbour);
+                    upNeighbour.gValue = g(upNeighbour);
+                    upNeighbour.fValue = upNeighbour.gValue + upNeighbour.hValue;
+                    neighboursOfCurrent.add(upNeighbour);
+                }
+                if (!(current.y - 1 < 0)) {
+                    Node downNeighbour = new Node(current.x,current.y - 1);
+                    downNeighbour.hValue = ManhattanDistance(downNeighbour);
+                    downNeighbour.gValue = g(downNeighbour);
+                    downNeighbour.fValue = downNeighbour.gValue + downNeighbour.hValue;
+                    neighboursOfCurrent.add(downNeighbour);
+                }
+                for (Node x: neighboursOfCurrent) {
+                    if (x.gValue < current.gValue && closed.contains(x)) {
+                        closed.remove(current);
+                    } else if (x.gValue < current.gValue && open.contains(x)) {
+                        open.remove(current);
+                    } else if (!open.contains(x) && !closed.contains(x)) {
+                        x.hValue = ManhattanDistance(x);
+                        x.parent = current;
+                        open.add(x);
+                    }
+                }
+            }
+        }
+    }
+
+    //h(n)
+    double ManhattanDistance(Node current) {
+        int x = end.x - current.x;
+        int y  = end.y - current.y;
+        double distance = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+        return distance;
+    }
+
+    //g(n)
+    double g(Node current) {
+        int x = current.x - start.x;
+        int y = current.y - start.y;
+        double distance = Math.sqrt(x^2 + y^2);
         return distance;
     }
 }
-
-class Path extends Board {
-
-    Path() {
-
-    }
-}
-
 class Square {
 
     boolean occupied = false;
