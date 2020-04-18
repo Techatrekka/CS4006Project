@@ -36,13 +36,13 @@ import javafx.stage.Stage;
 public class fx extends Application {
 
     static Square[][] board;
-    static ArrayList<Integer> letter = new ArrayList<>();
+    static ArrayList<Integer> coordinates = new ArrayList<>();
     static GridPane grid = new GridPane();
     static ArrayList<Node> path = new ArrayList<>();
 
     public static void main(String[] args) {
-        Board Board = new Board();
-        board = Board.getBoard();
+        Board newBoard = new Board();
+        board = newBoard.getBoard();
         launch(args);
     }
 
@@ -50,8 +50,6 @@ public class fx extends Application {
     public void start(Stage primaryStage) {
         printGrid(primaryStage);
         fx.dialogBox();
-      //  Graph graph = new Graph(board,letter.get(0),letter.get(1),letter.get(2),letter.get(3));
-      //  path = graph.Astar();
     }
 
     /**
@@ -73,6 +71,7 @@ public class fx extends Application {
 
     /**
      * Method to draw the path of the A* Algorithm.
+     * 
      * @return
      */
 
@@ -107,7 +106,7 @@ public class fx extends Application {
 
         Optional<String> results = dialog.showAndWait();
         if (results.isPresent()){
-            letter.add(Integer.parseInt(results.get()) - 1);
+            coordinates.add(Integer.parseInt(results.get()) - 1);
         }
 
         List<String> choices = new ArrayList<>();
@@ -124,7 +123,7 @@ public class fx extends Application {
 
         Optional<String> result2 = dialog2.showAndWait();
         if (result2.isPresent()){
-            letter.add((result2.get().charAt(0) - 64) - 1);
+            coordinates.add((result2.get().charAt(0) - 64) - 1);
         }
 
         ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
@@ -132,7 +131,7 @@ public class fx extends Application {
         dialog3.setHeaderText("");
         Optional<String> result3 = dialog3.showAndWait();
         if (result3.isPresent()){
-            letter.add(Integer.parseInt(result3.get()) - 1);
+            coordinates.add(Integer.parseInt(result3.get()) - 1);
         }
 
         ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
@@ -140,7 +139,7 @@ public class fx extends Application {
         dialog4.setHeaderText("");
         Optional<String> result4 = dialog4.showAndWait();
         if (result4.isPresent()){
-            letter.add((result4.get().charAt(0) - 64) - 1);
+            coordinates.add((result4.get().charAt(0) - 64) - 1);
         }
 
         Text startPos = new Text("Start");
@@ -151,8 +150,8 @@ public class fx extends Application {
         goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
         goalPos.setFill(Color.ORANGE);
 
-        grid.add(startPos, letter.get(1) ,letter.get(0));
-        grid.add(goalPos, letter.get(3), letter.get(2));
+        grid.add(startPos, coordinates.get(1) ,coordinates.get(0));
+        grid.add(goalPos, coordinates.get(3), coordinates.get(2));
     }
 
     /**
@@ -171,14 +170,14 @@ public class fx extends Application {
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
             { 
-                Graph graph = new Graph(board,letter.get(0),letter.get(1),letter.get(2),letter.get(3));
+                Graph graph = new Graph(board,coordinates.get(0),coordinates.get(1),coordinates.get(2),coordinates.get(3));
                 path = graph.Astar();
                 for(int i = 0; i < path.size(); i++){
                     grid.add(pathDraw(), path.get(i).y, path.get(i).x);
                 }
             } 
         }; 
-
+        
         button.setOnAction(event);
 
         Text numbers = new Text("1\n2\n3\n4\n5\n6\n7\n8");
@@ -240,12 +239,12 @@ class Node {
 
 class Graph {
 
-    Square[][] Board;
+    Square[][] board;
     Node start;
     Node end;
 
-    Graph(Square[][] Board, int startX, int startY, int endX, int endY) {
-        this.Board = Board;
+    Graph(Square[][] board, int startX, int startY, int endX, int endY) {
+        this.board = board;
         start = new Node(startX, startY);
         end = new Node(endX, endY);
     }
@@ -270,28 +269,28 @@ class Graph {
                 break;
             } else {
                 ArrayList<Node> neighboursOfCurrent = new ArrayList<>();
-                if (!(current.x + 1 > 7) && !Board[current.x + 1][current.y].getOccupied()) {
+                if (!(current.x + 1 > 7) && !board[current.x + 1][current.y].getOccupied()) {
                     Node rightNeighbour = new Node(current.x + 1,current.y);
                     rightNeighbour.hValue = ManhattanDistance(rightNeighbour);
                     rightNeighbour.gValue = g(rightNeighbour);
                     rightNeighbour.fValue = rightNeighbour.gValue + rightNeighbour.hValue;
                     neighboursOfCurrent.add(rightNeighbour);
                 }
-                if (!(current.x - 1 < 0) && !Board[current.x - 1][current.y].getOccupied()) {
+                if (!(current.x - 1 < 0) && !board[current.x - 1][current.y].getOccupied()) {
                     Node leftNeighbour = new Node(current.x - 1,current.y);
                     leftNeighbour.hValue = ManhattanDistance(leftNeighbour);
                     leftNeighbour.gValue = g(leftNeighbour);
                     leftNeighbour.fValue = leftNeighbour.gValue + leftNeighbour.hValue;
                     neighboursOfCurrent.add(leftNeighbour);
                 }
-                if (!(current.y + 1 > 7) && !Board[current.x][current.y + 1].getOccupied()) {
+                if (!(current.y + 1 > 7) && !board[current.x][current.y + 1].getOccupied()) {
                     Node upNeighbour = new Node(current.x,current.y + 1);
                     upNeighbour.hValue = ManhattanDistance(upNeighbour);
                     upNeighbour.gValue = g(upNeighbour);
                     upNeighbour.fValue = upNeighbour.gValue + upNeighbour.hValue;
                     neighboursOfCurrent.add(upNeighbour);
                 }
-                if (!(current.y - 1 < 0) && !Board[current.x][current.y-1].getOccupied()) {
+                if (!(current.y - 1 < 0) && !board[current.x][current.y-1].getOccupied()) {
                     Node downNeighbour = new Node(current.x,current.y - 1);
                     downNeighbour.hValue = ManhattanDistance(downNeighbour);
                     downNeighbour.gValue = g(downNeighbour);
