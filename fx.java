@@ -2,9 +2,9 @@
  *
  * CS4006 Intelligent Systems - Project.
  *
- * @author: Sean Lynch - 18245137
  * @author: Michele Cavaliere - 18219365
  * @author: Nicole Berty - 18246702
+ * @author: Sean Lynch - 18245137
  * @author: Matt Lucey - 18247083
  *
  */
@@ -408,10 +408,6 @@ class Board {
         int startYPos = (int) (Math.random() * 4 + 1);
         board[startXPos][startYPos].changeSquareStatus();
         int orientation = (int) (Math.random() * 2);
-        System.out.print(orientation);
-        System.out.println();
-        System.out.print(obstacle);
-        System.out.println();
         switch (obstacle) {
             case 0:
                 //I shape
