@@ -1,15 +1,17 @@
 # CS4006Project
+19-04-2020
+    - Write 2-3 page report on project (google doc)
+    - Make dots appear one after the other instead of all at once
+
 10-04-2020
-    - Add check for obstacle being generated right on the edge and preventing path from being generated (eg T generated in bottom left corner)
+    - Add check for obstacle being generated right on the edge and preventing path from being generated (eg T generated in bottom left corner) DONE
 
 09-04-2020
-    - After algorithm implemented, draw best path using circles to fill in (to differentiate from filled in squares)
+    - After algorithm implemented, draw best path using circles to fill in (to differentiate from filled in squares) DONE
 
 06-04-2020
 To do list:
-    - A* algorithm
-    - Write 2-3 page report on project (google doc)
-
+    - A* algorithm DONE
 
 31-03-2020
 To do list:
