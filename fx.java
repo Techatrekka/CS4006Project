@@ -99,59 +99,77 @@ public class fx extends Application {
             choices2.add(String.valueOf(i));
         }
 
-        ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
-        dialog.setTitle("Choose Coordinates");
-        dialog.setHeaderText("");
-        dialog.setContentText("Choose row number for start position: ");
-
-        Optional<String> results = dialog.showAndWait();
-        if (results.isPresent()){
-            coordinates.add(Integer.parseInt(results.get()) - 1);
-        }
-
         List<String> choices = new ArrayList<>();
 
-        for(int i = 1; i <= 8; i++){
-            char c = (char)(i + 64);
+        for (int i = 1; i <= 8; i++) {
+            char c = (char) (i + 64);
             choices.add(String.valueOf(c));
         }
+        boolean coords1Safe = false;
+        boolean coords2Safe = false;
+        while (!coords1Safe) {
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
+            dialog.setTitle("Choose Coordinates");
+            dialog.setHeaderText("");
+            dialog.setContentText("Choose row number for start position: ");
 
-        ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
-        dialog2.setTitle("Choose Coordinates");
-        dialog2.setHeaderText("");
-        dialog2.setContentText("Choose column letter for start position: ");
+            Optional<String> results = dialog.showAndWait();
+            if (results.isPresent()) {
+                coordinates.add(Integer.parseInt(results.get()) - 1);
+            }
 
-        Optional<String> result2 = dialog2.showAndWait();
-        if (result2.isPresent()){
-            coordinates.add((result2.get().charAt(0) - 64) - 1);
+            ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
+            dialog2.setTitle("Choose Coordinates");
+            dialog2.setHeaderText("");
+            dialog2.setContentText("Choose column letter for start position: ");
+
+            Optional<String> result2 = dialog2.showAndWait();
+            if (result2.isPresent()) {
+                coordinates.add((result2.get().charAt(0) - 64) - 1);
+            }
+            if (!(board[coordinates.get(0)][coordinates.get(1)].getOccupied())) {
+                coords1Safe = true;
+            }
+            else {
+                coordinates.remove(0);
+                coordinates.remove(0);
+            }
         }
 
-        ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
-        dialog3.setContentText("Choose row number for end position: ");
-        dialog3.setHeaderText("");
-        Optional<String> result3 = dialog3.showAndWait();
-        if (result3.isPresent()){
-            coordinates.add(Integer.parseInt(result3.get()) - 1);
+        while (!coords2Safe) {
+            ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
+            dialog3.setContentText("Choose row number for end position: ");
+            dialog3.setHeaderText("");
+            Optional<String> result3 = dialog3.showAndWait();
+            if (result3.isPresent()) {
+                coordinates.add(Integer.parseInt(result3.get()) - 1);
+            }
+
+            ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
+            dialog4.setContentText("Choose column letter for end position: ");
+            dialog4.setHeaderText("");
+            Optional<String> result4 = dialog4.showAndWait();
+            if (result4.isPresent()) {
+                coordinates.add((result4.get().charAt(0) - 64) - 1);
+            }
+            if (!(board[coordinates.get(2)][coordinates.get(3)].getOccupied())) {
+                coords2Safe = true;
+            } else {
+                coordinates.remove(2);
+                coordinates.remove(2);
+            }
         }
 
-        ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
-        dialog4.setContentText("Choose column letter for end position: ");
-        dialog4.setHeaderText("");
-        Optional<String> result4 = dialog4.showAndWait();
-        if (result4.isPresent()){
-            coordinates.add((result4.get().charAt(0) - 64) - 1);
-        }
+    Text startPos = new Text("Start");
+    startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+    startPos.setFill(Color.BLUE);
 
-        Text startPos = new Text("Start");
-        startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-        startPos.setFill(Color.BLUE);
+    Text goalPos = new Text("Goal");
+    goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+    goalPos.setFill(Color.ORANGE);
 
-        Text goalPos = new Text("Goal");
-        goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-        goalPos.setFill(Color.ORANGE);
-
-        grid.add(startPos, coordinates.get(1) ,coordinates.get(0));
-        grid.add(goalPos, coordinates.get(3), coordinates.get(2));
+    grid.add(startPos, coordinates.get(1) ,coordinates.get(0));
+    grid.add(goalPos, coordinates.get(3), coordinates.get(2));
     }
 
     /**
@@ -386,8 +404,8 @@ class Board {
             }
         }
         int obstacle = (int)(Math.random() * 3);
-        int startXPos = (int) (Math.random() * 6);
-        int startYPos = (int) (Math.random() * 6);
+        int startXPos = (int) (Math.random() * 4 + 1);
+        int startYPos = (int) (Math.random() * 4 + 1);
         board[startXPos][startYPos].changeSquareStatus();
         int orientation = (int) (Math.random() * 2);
         System.out.print(orientation);
