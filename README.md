@@ -1,5 +1,6 @@
 # CS4006Project
 19-04-2020
+    - When obstacle is T, it adds an extra dot if it has to decide between two equal distances
     - Write 2-3 page report on project (google doc)
     - Make dots appear one after the other instead of all at once
 
