@@ -2,9 +2,9 @@
  *
  * CS4006 Intelligent Systems - Project.
  *
+ * @author: Sean Lynch - 18245137
  * @author: Michele Cavaliere - 18219365
  * @author: Nicole Berty - 18246702
- * @author: Sean Lynch - 18245137
  * @author: Matt Lucey - 18247083
  *
  */
@@ -107,11 +107,12 @@ public class fx extends Application {
         }
         boolean coords1Safe = false;
         boolean coords2Safe = false;
+        String error = "";
         while (!coords1Safe) {
             ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
-            dialog.setTitle("Choose Coordinates");
+            dialog.setTitle("Choose Coordinates for start");
             dialog.setHeaderText("");
-            dialog.setContentText("Choose row number for start position: ");
+            dialog.setContentText(error + "Choose row number for start position: ");
 
             Optional<String> results = dialog.showAndWait();
             if (results.isPresent()) {
@@ -119,9 +120,9 @@ public class fx extends Application {
             }
 
             ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
-            dialog2.setTitle("Choose Coordinates");
+            dialog2.setTitle("Choose Coordinates for start");
             dialog2.setHeaderText("");
-            dialog2.setContentText("Choose column letter for start position: ");
+            dialog2.setContentText(error + "Choose column letter for start position: ");
 
             Optional<String> result2 = dialog2.showAndWait();
             if (result2.isPresent()) {
@@ -131,14 +132,16 @@ public class fx extends Application {
                 coords1Safe = true;
             }
             else {
+                error = "You chose an occupied space, try again! ";
                 coordinates.remove(0);
                 coordinates.remove(0);
             }
         }
-
+        error = "";
         while (!coords2Safe) {
             ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
-            dialog3.setContentText("Choose row number for end position: ");
+            dialog3.setTitle("Choose coordinates for end");
+            dialog3.setContentText(error + "Choose row number for end position: ");
             dialog3.setHeaderText("");
             Optional<String> result3 = dialog3.showAndWait();
             if (result3.isPresent()) {
@@ -146,7 +149,8 @@ public class fx extends Application {
             }
 
             ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
-            dialog4.setContentText("Choose column letter for end position: ");
+            dialog4.setTitle("Choose coordinates for end");
+            dialog4.setContentText(error + "Choose column letter for end position: ");
             dialog4.setHeaderText("");
             Optional<String> result4 = dialog4.showAndWait();
             if (result4.isPresent()) {
@@ -155,6 +159,7 @@ public class fx extends Application {
             if (!(board[coordinates.get(2)][coordinates.get(3)].getOccupied())) {
                 coords2Safe = true;
             } else {
+                error = "You chose an occupied space, try again! ";
                 coordinates.remove(2);
                 coordinates.remove(2);
             }
