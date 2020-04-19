@@ -110,7 +110,7 @@ public class fx extends Application {
         String error = "";
         while (!coords1Safe) {
             ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
-            dialog.setTitle("Choose Coordinates for start");
+            dialog.setTitle("Choose coordinates for start");
             dialog.setHeaderText("");
             dialog.setContentText(error + "Choose row number for start position: ");
 
@@ -120,7 +120,7 @@ public class fx extends Application {
             }
 
             ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
-            dialog2.setTitle("Choose Coordinates for start");
+            dialog2.setTitle("Choose coordinates for start");
             dialog2.setHeaderText("");
             dialog2.setContentText(error + "Choose column letter for start position: ");
 
@@ -505,32 +505,6 @@ class Board {
                 }
                 break;
         }
-
-        /*int XPos, YPos;
-        for (int i = 1; i < numOfOccupiedSquares; i++) {
-            do {
-                XPos = (int) (Math.random() * 8);
-                YPos = (int) (Math.random() * 8);
-            } while (!board[XPos][YPos].getOccupied() && !isBesideOccupiedSquare(XPos,YPos));
-            board[XPos][YPos].changeSquareStatus();
-        }*/
-    }
-
-    private boolean isBesideOccupiedSquare(int xPos, int yPos) {
-        if (board[Math.abs(xPos-1)][yPos].getOccupied()) {
-            return true;
-        } else if (board[xPos][Math.abs(yPos-1)].getOccupied()) {
-            return true;
-        } else if (xPos !=7) {
-            if (board[xPos+1][yPos].getOccupied()) {
-                return true;
-            }
-        } else if (yPos != 7) {
-            if (board[xPos][yPos+1].getOccupied()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Square[][] getBoard() {
