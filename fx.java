@@ -54,7 +54,7 @@ public class fx extends Application {
     }
 
     /**
-     * Method to fill squares on the grid.
+     * Method to fill in squares on the grid to represent the obstacle.
      *
      * @SubScene
      */
@@ -71,9 +71,9 @@ public class fx extends Application {
     }
 
     /**
-     * Method to draw the path of the A* Algorithm.
+     * Method to draw the path of the A* Algorithm using circles.
      *
-     * @return
+     * @SubScene
      */
 
     public static SubScene pathDraw() {
@@ -88,46 +88,46 @@ public class fx extends Application {
     }
 
     /**
-     * Pops up four dialog box's to the screen to enter the co-ordinates
+     * Creates four dialog boxes on the screen to enter the co-ordinates
      * of the start and goal position.
      */
 
     static void dialogBox() {
 
-        List<String> choices2 = new ArrayList<> ();
+        List<String> rowNums = new ArrayList<> ();
 
         for(int i = 1; i <= 8; i++){
-            choices2.add(String.valueOf(i));
+            rowNums.add(String.valueOf(i));
         }
 
-        List<String> choices = new ArrayList<>();
+        List<String> colLetters = new ArrayList<>();
 
         for (int i = 1; i <= 8; i++) {
             char c = (char) (i + 64);
-            choices.add(String.valueOf(c));
+            colLetters.add(String.valueOf(c));
         }
         boolean coords1Safe = false;
         boolean coords2Safe = false;
         String error = "";
         while (!coords1Safe) {
-            ChoiceDialog<String> dialog = new ChoiceDialog<>("1", choices2);
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("1", rowNums);
             dialog.setTitle("Choose Coordinates for start");
             dialog.setHeaderText("");
             dialog.setContentText(error + "Choose row number for start position: ");
 
-            Optional<String> results = dialog.showAndWait();
-            if (results.isPresent()) {
-                coordinates.add(Integer.parseInt(results.get()) - 1);
+            Optional<String> choice = dialog.showAndWait();
+            if (choice.isPresent()) {
+                coordinates.add(Integer.parseInt(choice.get()) - 1);
             }
 
-            ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", choices);
+            ChoiceDialog<String> dialog2 = new ChoiceDialog<>("A", colLetters);
             dialog2.setTitle("Choose Coordinates for start");
             dialog2.setHeaderText("");
             dialog2.setContentText(error + "Choose column letter for start position: ");
 
-            Optional<String> result2 = dialog2.showAndWait();
-            if (result2.isPresent()) {
-                coordinates.add((result2.get().charAt(0) - 64) - 1);
+            Optional<String> choice2 = dialog2.showAndWait();
+            if (choice2.isPresent()) {
+                coordinates.add((choice2.get().charAt(0) - 64) - 1);
             }
             if (!(board[coordinates.get(0)][coordinates.get(1)].getOccupied())) {
                 coords1Safe = true;
@@ -140,22 +140,22 @@ public class fx extends Application {
         }
         error = "";
         while (!coords2Safe) {
-            ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", choices2);
+            ChoiceDialog<String> dialog3 = new ChoiceDialog<>("1", rowNums);
             dialog3.setTitle("Choose coordinates for end");
             dialog3.setContentText(error + "Choose row number for end position: ");
             dialog3.setHeaderText("");
-            Optional<String> result3 = dialog3.showAndWait();
-            if (result3.isPresent()) {
-                coordinates.add(Integer.parseInt(result3.get()) - 1);
+            Optional<String> choice3 = dialog3.showAndWait();
+            if (choice3.isPresent()) {
+                coordinates.add(Integer.parseInt(choice3.get()) - 1);
             }
 
-            ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", choices);
+            ChoiceDialog<String> dialog4 = new ChoiceDialog<>("A", colLetters);
             dialog4.setTitle("Choose coordinates for end");
             dialog4.setContentText(error + "Choose column letter for end position: ");
             dialog4.setHeaderText("");
-            Optional<String> result4 = dialog4.showAndWait();
-            if (result4.isPresent()) {
-                coordinates.add((result4.get().charAt(0) - 64) - 1);
+            Optional<String> choice4 = dialog4.showAndWait();
+            if (choice4.isPresent()) {
+                coordinates.add((choice4.get().charAt(0) - 64) - 1);
             }
             if (!(board[coordinates.get(2)][coordinates.get(3)].getOccupied())) {
                 coords2Safe = true;
@@ -166,16 +166,16 @@ public class fx extends Application {
             }
         }
 
-    Text startPos = new Text("Start");
-    startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-    startPos.setFill(Color.BLUE);
+        Text startPos = new Text("Start");
+        startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+        startPos.setFill(Color.BLUE);
 
-    Text goalPos = new Text("Goal");
-    goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-    goalPos.setFill(Color.ORANGE);
+        Text goalPos = new Text("Goal");
+        goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+        goalPos.setFill(Color.ORANGE);
 
-    grid.add(startPos, coordinates.get(1) ,coordinates.get(0));
-    grid.add(goalPos, coordinates.get(3), coordinates.get(2));
+        grid.add(startPos, coordinates.get(1) ,coordinates.get(0));
+        grid.add(goalPos, coordinates.get(3), coordinates.get(2));
     }
 
     /**
@@ -186,12 +186,12 @@ public class fx extends Application {
 
     void printGrid(Stage primaryStage){
 
-        Button button = new Button();
-        button.setText("Find Shortest Path");
-        button.setAlignment(Pos.BOTTOM_CENTER);
-        button.setPrefSize(150, 50);
+        Button pathButton = new Button();
+        pathButton.setText("Find Shortest Path");
+        pathButton.setAlignment(Pos.BOTTOM_CENTER);
+        pathButton.setPrefSize(150, 50);
 
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> runAstar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
                 Graph graph = new Graph(board,coordinates.get(0),coordinates.get(1),coordinates.get(2),coordinates.get(3));
@@ -202,7 +202,7 @@ public class fx extends Application {
             }
         };
 
-        button.setOnAction(event);
+        pathButton.setOnAction(runAstar);
 
         Text numbers = new Text("1\n2\n3\n4\n5\n6\n7\n8");
         numbers.setFont(Font.font("Tahoma", FontWeight.NORMAL, 63));
@@ -218,8 +218,8 @@ public class fx extends Application {
         }
 
         for(int col = 0; col < colSize; col++){
-            ColumnConstraints column = new ColumnConstraints(75);
-            grid.getColumnConstraints().add(column);
+            ColumnConstraints columns = new ColumnConstraints(75);
+            grid.getColumnConstraints().add(columns);
         }
 
         for (int i = 0; i < rowSize; i++) {
@@ -231,10 +231,10 @@ public class fx extends Application {
         }
 
         StackPane stack = new StackPane();
-        stack.getChildren().addAll(grid,numbers,letters,button);
+        stack.getChildren().addAll(grid,numbers,letters, pathButton);
         StackPane.setAlignment(letters, Pos.TOP_CENTER);
         StackPane.setAlignment(numbers, Pos.CENTER_LEFT);
-        StackPane.setAlignment(button, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(pathButton, Pos.BOTTOM_CENTER);
 
         grid.setAlignment(Pos.CENTER);
         grid.setStyle("-fx-background-color: WHITE; -fx-grid-lines-visible: true");
@@ -384,14 +384,23 @@ class Square {
 
     boolean occupied = false;
 
+    /**
+     * Default constructor for the square class
+     */
     public Square() {
 
     }
-
+    /**
+     * Constructor for the sqaure class
+     * @param occupied
+     */
     public Square(boolean occupied) {
         this.occupied = occupied;
     }
 
+    /**
+     * Change the status of the square from occupied to not occupied and vice versa
+     */
     public void changeSquareStatus() {
         if (occupied) {
             occupied = false;
@@ -400,11 +409,18 @@ class Square {
         }
     }
 
+    /**
+     * Returns whether current square is occupied or not
+     * @return true if square is occupied
+     */
     public boolean getOccupied() {
         return occupied;
     }
 }
 
+/**
+ * Board class creates the board object and generates the obstacles, including their shape and position on the grid
+ */
 class Board {
 
     Square[][] board;
