@@ -189,7 +189,7 @@ public class fx extends Application {
         Button button = new Button();
         button.setText("Find Shortest Path");
         button.setAlignment(Pos.BOTTOM_CENTER);
-        button.setPrefSize(100, 40);
+        button.setPrefSize(150, 50);
 
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
