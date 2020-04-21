@@ -88,15 +88,30 @@ public class fx extends Application {
     }
 
     /**
-     * Creates four dialog boxes on the screen to enter the co-ordinates
-     * of the start and goal position.
+     * Method to add text into the grid.
+     * 
+     * @param  Color col
+     * @param String s
+     * @return Text
+     */
+
+    static Text addText(Color col, String s) {
+        Text text = new Text(s);
+        text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
+        text.setFill(col);
+        return text;
+    }
+
+    /**
+     * Creates four dialog boxes on the screen to enter the co-ordinates of the
+     * start and goal position.
      */
 
     static void dialogBox() {
 
-        List<String> rowNums = new ArrayList<> ();
+        List<String> rowNums = new ArrayList<>();
 
-        for(int i = 1; i <= 8; i++){
+        for (int i = 1; i <= 8; i++) {
             rowNums.add(String.valueOf(i));
         }
 
@@ -131,8 +146,7 @@ public class fx extends Application {
             }
             if (!(board[coordinates.get(0)][coordinates.get(1)].getOccupied())) {
                 coords1Safe = true;
-            }
-            else {
+            } else {
                 error = "You chose an occupied space, try again! ";
                 coordinates.remove(0);
                 coordinates.remove(0);
@@ -166,19 +180,11 @@ public class fx extends Application {
             }
         }
 
-        Text startPos = new Text("Start");
-        startPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-        startPos.setFill(Color.BLUE);
-
-        Text goalPos = new Text("Goal");
-        goalPos.setFont(Font.font("Tahoma", FontWeight.NORMAL, 32));
-        goalPos.setFill(Color.ORANGE);
-
-        grid.add(startPos, coordinates.get(1) ,coordinates.get(0));
-        grid.add(goalPos, coordinates.get(3), coordinates.get(2));
+        grid.add(addText(Color.BLUE, "Start"), coordinates.get(1), coordinates.get(0));
+        grid.add(addText(Color.ORANGE, "Goal"), coordinates.get(3), coordinates.get(2));
     }
 
-    /**
+     /**
      * Prints out the grid on the sceen.
      * Adds both numbers and letters to the side and top of the grid.
      * @param primaryStage
@@ -188,7 +194,8 @@ public class fx extends Application {
 
         Button pathButton = new Button();
         pathButton.setText("Find Shortest Path");
-        pathButton.setAlignment(Pos.BOTTOM_CENTER);
+        pathButton.setAlignment(Pos.BASELINE_CENTER);
+        pathButton.setTranslateY(-10);
         pathButton.setPrefSize(150, 50);
 
         EventHandler<ActionEvent> runAstar = new EventHandler<ActionEvent>() {
@@ -199,6 +206,8 @@ public class fx extends Application {
                 for(int i = 0; i < path.size(); i++){
                     grid.add(pathDraw(), path.get(i).y, path.get(i).x);
                 }
+                grid.add(addText(Color.BLACK, "Start"), coordinates.get(1), coordinates.get(0));
+                grid.add(addText(Color.BLACK, "Goal"), coordinates.get(3), coordinates.get(2));
             }
         };
 
@@ -230,11 +239,15 @@ public class fx extends Application {
             }
         }
 
+        letters.toFront();
+        numbers.toFront();
+        pathButton.toFront();
+
         StackPane stack = new StackPane();
-        stack.getChildren().addAll(grid,numbers,letters, pathButton);
         StackPane.setAlignment(letters, Pos.TOP_CENTER);
         StackPane.setAlignment(numbers, Pos.CENTER_LEFT);
         StackPane.setAlignment(pathButton, Pos.BOTTOM_CENTER);
+        stack.getChildren().addAll(grid,numbers,letters, pathButton);
 
         grid.setAlignment(Pos.CENTER);
         grid.setStyle("-fx-background-color: WHITE; -fx-grid-lines-visible: true");
