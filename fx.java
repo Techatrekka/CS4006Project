@@ -90,7 +90,7 @@ public class fx extends Application {
     /**
      * Method to add text into the grid.
      * 
-     * @param  Color col
+     * @param Color col
      * @param String s
      * @return Text
      */
@@ -104,7 +104,7 @@ public class fx extends Application {
 
     /**
      * Creates four dialog boxes on the screen to enter the co-ordinates of the
-     * start and goal position.
+     * start and goal positions.
      */
 
     static void dialogBox() {
@@ -186,7 +186,7 @@ public class fx extends Application {
 
      /**
      * Prints out the grid on the sceen.
-     * Adds both numbers and letters to the side and top of the grid.
+     * Adds both numbers and letters to the left and top of the grid.
      * @param primaryStage
      */
 
@@ -379,6 +379,7 @@ class Graph {
 
     //h(n)
     double ManhattanDistance(Node current) {
+        //absolute value of node.x - end.x & node.y-end.y = end.x-current.x & end.y - node.y
         int x = end.x - current.x;
         int y  = end.y - current.y;
         double distance = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
